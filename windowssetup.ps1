@@ -1,7 +1,9 @@
 # Install X server
-Invoke-WebRequest -Uri https://datapacket.dl.sourceforge.net/project/xming/Xming/6.9.0.31/Xming-6-9-0-31-setup.exe -OutFile $env:USERPROFILE\Downloads\Xming-6-9-0-31-setup.exe
+$path = Invoke-WebRequest "https://sourceforge.net/projects/xming/best_release.json" | ConvertFrom-Json | select -expand platform_releases | select -expand windows | select -ExpandProperty filename
+#e.g. $path = Xming/6.9.0.31/Xming-6-9-0-31-setup.exe
+Invoke-WebRequest -Uri https://datapacket.dl.sourceforge.net/project/xming/$path -OutFile $env:USERPROFILE\Downloads\Xming-setup.exe
 cd $env:USERPROFILE\Downloads
-Xming-6-9-0-31-setup.exe /silent /norestart
+Xming-setup.exe /silent /norestart
 C:\Program Files (x86)\Xming\XLaunch.exe
 
 # Enable WSL and restart
